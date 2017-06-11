@@ -1,0 +1,33 @@
+<html>
+<head>
+  <title>File metadata microservice</title>
+</head>
+<body>
+
+    <p>Post to the /analyse endpoint which displays the size of the file uploaded </p>
+    <form action="analyse" method="post" enctype="multipart/form-data" id="form">
+        <input type="file" name="fileToUpload" id="fileToUpload"/>
+        <input type="submit" value="Upload" name="submit"/>
+    </form>
+</body>
+
+<script
+			  src="https://code.jquery.com/jquery-3.2.1.min.js"
+			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			  crossorigin="anonymous"></script>
+<script>
+$("form").submit(e => {
+        e.preventDefault();
+        var $form = $("form"),
+        url = $form.attr( "action" );
+        var posting = $.ajax({type: "POST",
+              url: url,
+              data: new FormData($form[0]),
+              processData: false,
+              contentType: false
+        });
+        $form.find("input[name='fileToUpload']").val("");
+        posting.done(result => alert("FILE SIZE: " + result.size));
+    });
+</script>
+</html>
